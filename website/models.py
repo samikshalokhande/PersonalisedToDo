@@ -21,7 +21,7 @@ class User(UserMixin, db.Model):
 class ToDo(db.Model):
   # layout for ToDos
   id = db.Column(db.Integer, primary_key=True)
-  todo = db.Column(db.String(100000))
+  todo_data = db.Column(db.String(100000))
   date = db.Column(db.DateTime(timezone=True), default=func.now())
   # FYI: func.now() returns current date and time
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

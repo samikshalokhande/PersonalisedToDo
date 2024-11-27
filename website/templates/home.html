@@ -2,16 +2,36 @@
   <title>{% block title %}Home{% endblock %}</title>
 
 {%block content%}
-
-  <div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="text-center">
-        <h1 class="mb-4">Welcome Guys!</h1>
-        <p class="mb-4 text-muted">Get started by logging in or registering below.</p>
-        <div class="d-grid gap-3">
-            <a href="/login" class="btn btn-primary btn-lg">Login</a>
-            <a href="/register" class="btn btn-success btn-lg">Register</a>
-        </div>
+<form method="POST">
+  <div class="container todo-container">
+    <h1 class="text-center mb-4">To-Do List</h1>
+    <div class="input-group mb-3">
+      <input id="todoInput" type="text" name="todoInput" class="form-control" placeholder="Add a new task">
+      <button id="addTaskBtn" class="btn btn-primary">Add Task</button>
     </div>
+    </form>
+
+    <ul id="todoList" class="list-group">
+      <!-- Example list items -->
+      {% for td in user.todo %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="d-flex w-100 justify-content-between align-items-center">
+          <span>{{ td.todo_data }}</span>
+          <div>
+            <button class="btn btn-sm  me-2" title="Edit">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-sm " title="Delete" onClick="deleteToDo({{ td.id }})"">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+
   </div>
 
- {% endblock %}
+
+{% endblock %}
