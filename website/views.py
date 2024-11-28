@@ -36,3 +36,26 @@ def delete_todo():
       db.session.commit()
       return jsonify({"message": "Todo deleted successfully"}), 200
   return jsonify({"message": "Todo not found"}), 404
+
+
+@views.route('/edit-todo', methods=['POST'])
+def edit_todo():
+  data = json.loads(request.data)
+  todo_id = data.get('todoId')
+  new_text = data.get('newText')
+
+  todo_item = ToDo.query.get(todo_id)
+
+  if todo_item:
+    if todo_item.user_id == current_user.id:
+      # Update the todo item
+      todo_item.todo_data = new_text
+      db.session.commit()
+      return jsonify({
+          "success": True,
+          "message": "Todo updated successfully"
+      }), 200
+    else:
+      return jsonify({"success": False, "message": "Unauthorized"}), 403
+  else:
+    return jsonify({"success": False, "message": "Todo not found"}), 404

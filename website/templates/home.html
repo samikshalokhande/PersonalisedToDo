@@ -18,7 +18,7 @@
         <div class="d-flex w-100 justify-content-between align-items-center">
           <span>{{ td.todo_data }}</span>
           <div>
-            <button class="btn btn-sm  me-2" title="Edit">
+            <button class="btn btn-sm  me-2" title="Edit" onClick='editToDo({{ td.id }})'>
               <i class="fas fa-edit"></i>
             </button>
             <button class="btn btn-sm " title="Delete" onClick="deleteToDo({{ td.id }})"">
@@ -26,6 +26,19 @@
             </button>
           </div>
         </div>
+
+        
+        <!-- Inline Edit Input -->
+        <div id="edit-input-{{ td.id }}" style="display: none;">
+          <input type="text" class="form-control" id="edit-todo-input-{{ td.id }}" value="{{ td.todo_data }}">
+          <button class="btn btn-sm btn-success" onClick="saveEdit({{ td.id }})">Save</button>
+          <button class="btn btn-sm btn-danger" onClick="cancelEdit({{ td.id }})">Cancel</button>
+        </div>
+
+
+
+
+
       </li>
       {% endfor %}
     </ul>
