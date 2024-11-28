@@ -23,19 +23,6 @@ def home():
   return render_template("home.html", user=current_user)
 
 
-# @views.route('/delete-todo', methods=['POST'])
-# def delete_todo():
-#   todo = json.loads(request.data)
-#   # todo_id is coming from index.js
-#   todoId = todo['todo_id']
-#   todo = ToDo.query.get(todoId)
-#   if todo:
-#     if todo.user_id == current_user.id:
-#       db.session.delete(todo)
-#       db.session.commit()
-#   return jsonify({})
-
-
 @views.route('/delete-todo', methods=['POST'])
 def delete_todo():
   todo = json.loads(request.data)
