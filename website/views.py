@@ -23,19 +23,6 @@ def home():
   return render_template("home.html", user=current_user)
 
 
-# @views.route('/delete-todo', methods=['POST'])
-# def delete_todo():
-#   todo = json.loads(request.data)
-#   # todo_id is coming from index.js
-#   todoId = todo['todo_id']
-#   todo = ToDo.query.get(todoId)
-#   if todo:
-#     if todo.user_id == current_user.id:
-#       db.session.delete(todo)
-#       db.session.commit()
-#   return jsonify({})
-
-
 @views.route('/delete-todo', methods=['POST'])
 def delete_todo():
   todo = json.loads(request.data)
@@ -49,3 +36,26 @@ def delete_todo():
       db.session.commit()
       return jsonify({"message": "Todo deleted successfully"}), 200
   return jsonify({"message": "Todo not found"}), 404
+
+
+@views.route('/edit-todo', methods=['POST'])
+def edit_todo():
+  data = json.loads(request.data)
+  todo_id = data.get('todoId')
+  new_text = data.get('newText')
+
+  todo_item = ToDo.query.get(todo_id)
+
+  if todo_item:
+    if todo_item.user_id == current_user.id:
+      # Update the todo item
+      todo_item.todo_data = new_text
+      db.session.commit()
+      return jsonify({
+          "success": True,
+          "message": "Todo updated successfully"
+      }), 200
+    else:
+      return jsonify({"success": False, "message": "Unauthorized"}), 403
+  else:
+    return jsonify({"success": False, "message": "Todo not found"}), 404
